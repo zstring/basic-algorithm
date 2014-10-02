@@ -40,6 +40,13 @@ public class ClosestPaitProblem {
 				else return 0;
 			}
 		}
+//		public int compare(Point a, Point b) {
+//			Termmap.get(a);
+//			TermTexta = hasmap(a);
+//			TermTextb = hasmap(b);
+//			if (a > b) return 1;
+//			else if (a < b) return -1;
+//		}	
 	}
 	
 	private class PointByY implements Comparator<Point> {
@@ -75,6 +82,7 @@ public class ClosestPaitProblem {
 		closestPairSplit(pY, aux, lo, mid, hi);
 		delta1 = closestPairRec(pX, pY, aux, lo, mid);
 		delta2 = closestPairRec(pX, pY, aux, mid + 1, hi);
+		closestPairMerge(pY, aux, lo, mid, hi);
 		double delta = Math.min(delta1, delta2);
 		int M = 0;
 		for (int i = lo; i <= hi; i++) {
@@ -116,6 +124,25 @@ public class ClosestPaitProblem {
 		}
 	}
 	
+	private void closestPairMerge(Point[] pY, Point[] aux, int lo, int mid, int hi) {
+		for (int i = lo; i <= hi; i++) {
+			aux[i] = pY[i];
+		}
+		int ii = lo, jj = mid + 1;
+		for (int i = lo; i <= hi; i++) {
+			if (ii > mid) pY[i] = aux[jj++];
+			else if (jj > hi) pY[i] = aux[ii++];
+			else {
+				if (aux[ii].x < aux[jj].x) {
+					pY[i] = aux[ii++];
+				}
+				else {
+					pY[i] = aux[jj++];
+				}
+					
+			}
+		}
+	}
 	public static void main (String[] args) {
 		int n = 10;
 		Point[] p = new Point[n];
@@ -125,6 +152,7 @@ public class ClosestPaitProblem {
 			int x = r.nextInt(10);
 			int y = r.nextInt(10);
 			p[i] = 	cpp.new Point(x, y);
+			System.out.print("[i : " + i + " x : " + x + " y : " + y + " ]");
 		}
 //		Arrays.sort(p, cpp.new PointByX());
 		cpp.closestPair(p);
