@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 
-public class ClosestPaitProblem {
+public class ClosestPairProblem {
 
 	private double distance;
 	private Point p1;
@@ -145,7 +145,7 @@ public class ClosestPaitProblem {
 	public static void main (String[] args) {
 		int n = 10;
 		Point[] p = new Point[n];
-		ClosestPaitProblem cpp = new ClosestPaitProblem();
+		ClosestPairProblem cpp = new ClosestPairProblem();
 		Random r = new Random();
 		for (int i = 0; i < n; i++) {
 			int x = r.nextInt(10);
