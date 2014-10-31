@@ -1,5 +1,7 @@
 package algo;
 
+import java.util.Random;
+
 public class KaratsubaMult {
 
 	private final int base;
@@ -15,17 +17,20 @@ public class KaratsubaMult {
 
 		int halfX = xLen / 2;
 		int halfY = yLen / 2;
-		int leftX = x / (int) Math.pow(base, halfX);
-		int rightX = x - leftX * (int) Math.pow(base, halfX);
+		int div = halfX;
+		if (halfX > halfY)
+			div = halfY;
+		int leftX = x / (int) Math.pow(base, div);
+		int rightX = x - leftX * (int) Math.pow(base, div);
 		
-		int leftY = y / (int) Math.pow(base, halfY);
-		int rightY = y - leftY * (int) Math.pow(base, halfY);
+		int leftY = y / (int) Math.pow(base, div);
+		int rightY = y - leftY * (int) Math.pow(base, div);
 
 		long a = multiply(leftX, leftY);
 		long c = multiply(rightX, rightY);
 		long b = multiply(leftX + rightX, leftY + rightY) - a - c;
-		result = a * (long) Math.pow(base, 2 * halfX) +
-					b * (long) Math.pow(base, halfX) + c;
+		result = a * (long) Math.pow(base, 2 * div) +
+					b * (long) Math.pow(base, div) + c;
 		return result;
 	}
 	
@@ -41,17 +46,26 @@ public class KaratsubaMult {
 	
 	
 	public static void main(String[] args) {
-		int[] x = {2323, 12, 1231, 1213, 11234, 141523};
-		int[] y = {2323, 31234, 345342, 34534, 25345, 122134334};
+//		int[] x = {2323, 12, 1231, 1213, 11234, 141523};
+//		int[] y = {2323, 31234, 345342, 34534, 25345, 122134334};
 //		int[] x = {10};
 //		int[] y = {10};
-		int N = x.length;
+		int N = 100;
+		int val = 100000;
+		int[] x = new int[N];
+		int[] y = new int[N];
+		Random r = new Random();
+		for (int i = 0; i < N; i++) {
+			x[i] = r.nextInt(val);
+			y[i] = r.nextInt(val);
+		}
 		int base = 10;
 		KaratsubaMult km = new KaratsubaMult(base);
 		for (int i = 0; i < N; i++) {
-			long val = km.multiply(x[i], y[i]);
-			System.out.println(val + " == "+  x[i] * y[i]);
-			if (val != (x[i] * y[i])) {
+			long value = km.multiply(x[i], y[i]);
+			long actMul =  (long)x[i] * y[i];
+			System.out.println(value + " == "+ actMul);
+			if (value != actMul) {
 				System.out.println("Your Code Not Working!!!");
 			}
 		}
